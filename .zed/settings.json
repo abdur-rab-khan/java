@@ -1,17 +1,31 @@
-// {
-//   "lsp": {
-//     "jdtls": {
-//       "settings": {
-//         "java_home": "/c/Program Files/Java/jdk-25",
-//       },
-//     },
-//   },
-// }
 {
+  "languages": {
+    "Java": {
+      "tab_size": 4,
+      "format_on_save": "on",
+      "enable_language_server": true,
+    },
+  },
   "lsp": {
     "jdtls": {
       "settings": {
         "jdk_auto_download": true,
+        "lombok_support": true,
+      },
+      "initialization_options": {
+        "settings": {
+          "java": {
+            "configuration": {
+              "runtimes": [
+                {
+                  "name": "JavaSE-17",
+                  "path": "C:/Program Files/Java/jdk-17",
+                  "default": true,
+                },
+              ],
+            },
+          },
+        },
       },
     },
   },
