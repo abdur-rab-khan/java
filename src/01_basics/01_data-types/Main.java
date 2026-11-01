@@ -17,9 +17,15 @@
          |   7. char      |  16 bits   |  0 to 65,535 (unsigned)                                         |
          |   8. boolean   |  not fixed |  true or false                                                  |
          +-----------------------------------------------------------------------------------------------+
+
+🟡 """final""" keyword use to make a variable content constant (immutable) similar to """const""" keyword
  */
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 class PrimitiveTypes {
 
@@ -56,7 +62,6 @@ class PrimitiveTypes {
         System.out.println("Value of count is: " + String.valueOf(count));
         System.out.println("Value of name is: " + String.valueOf(name));
         System.out.println("Value of users is: " + String.valueOf(users));
-        System.out.print("\n\n");
     }
 
     void wrapBoxing() {
@@ -93,16 +98,108 @@ class PrimitiveTypes {
 
         🔷 Note: Boxing: Primitive to wrapper, Unboxing: Wrapper to primitive
         */
+        Integer a = 120;
+        Integer b = 120;
+        // 👉 True because it's in the range, since both are pointing to same memory address
+        System.out.println("Is a and b is equal: " + String.valueOf(a == b));
+
+        Integer a1 = 500,
+            b2 = 600;
+        System.out.println(
+            "Is a1 and b2 is equal: " + String.valueOf(a1 == b2)
+        ); // 👉 False because wrapper object only cache the value between -128 to 127
+
+        // 🟡 Generic and Collection, Collection framework only work with Wrapper primitive
+        List<Integer> ages = new ArrayList<>();
+        Map<String, Double> prices = new HashMap<>();
+        System.out.print("\n\n");
     }
 }
+
+class ArrayInJava {
+
+    void fixedArray() {
+        System.out.println("<===============> Fixed Array <===============>");
+        int[] a = new int[5]; // 👉 Fixed sized array length 5 with default value """0"""
+        Arrays.fill(a, 400);
+
+        // int k = a[40]; 👉 """ArrayIndexOutOfBoundsException""" exception occurred
+
+        int[] b = { 1, 2, 3, 4, 5 }; // 👉 Fixed sized array length 5 with value
+
+        System.out.println("Value of a is: " + Arrays.toString(a));
+        System.out.println("Value of b is: " + Arrays.toString(b));
+
+        int[] k = { 1, 2, 3, 4 };
+        int[] l = { 1, 2, 3, 4 };
+
+        int[] m = { 11, 22, 33, 44 };
+        int[] n = m;
+        n[0] = 44;
+
+        // 🟡 Creates a copy of m, both are pointing to different memory location
+        int[] p = m.clone();
+        int[] q = Arrays.copyOf(p, p.length + 3); // [11, 22, 33, 44, 0, 0, 0]
+
+        // 🟡 Just copying the range of value from the array
+        int[] y = { 10, 20, 30, 40, 50 };
+        int[] part = Arrays.copyOfRange(y, 1, 5); // [20, 30, 40, 50]
+        System.out.println("Part of y is: " + Arrays.toString(part));
+
+        // 👉 Both m and n are pointing to same memory location
+        System.out.println(
+            "Value of m and n: " +
+                Arrays.toString(m) +
+                " -- " +
+                Arrays.toString(n)
+        );
+
+        // 👉 FALSE: Compare whether both pointer to same memory location or not
+        System.out.println("Is k and l is equal: " + (k == l));
+
+        // 👉 FALSE: Compare whether both pointer to same memory location or not
+        System.out.println("Is k and l is equal: " + k.equals(l));
+
+        // 👉 TRUE: Compare it's value not reference
+        System.out.println(
+            "Is k and l is equal: " + String.valueOf(Arrays.equals(k, l))
+        );
+
+        // 👉 Running a loop on the array """a"""
+        System.out.print("Value of a is: ");
+        for (int i = 0; i < a.length; ++i) {
+            System.out.print(a[i] + (i < a.length - 1 ? ", " : ""));
+        }
+        System.out.print("\n");
+
+        // 👉 Running for each loop on the array """a"""
+        System.out.print("Value of a using for each: ");
+        for (int x : a) {
+            System.out.print(x + ", ");
+        }
+        System.out.print("\n");
+    }
+
+    void dynamicArray() {
+        // SEE FROM COLLECTION FRAMEWORKS
+        System.out.println("<===============> Dynamic Array <===============>");
+    }
+}
+
+class StringInJava {}
 
 public class Main {
 
     public static void main(String[] args) {
         System.out.println("Hello Java");
 
+        ArrayInJava arr = new ArrayInJava();
+        StringInJava str = new StringInJava();
         PrimitiveTypes pt = new PrimitiveTypes();
+
         pt.integerType();
         pt.wrapBoxing();
+        arr.fixedArray();
+        arr.dynamicArray();
     }
 }
