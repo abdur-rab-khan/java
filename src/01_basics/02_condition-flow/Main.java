@@ -151,6 +151,19 @@ class LoopingInJava {
 
         // 🟡 Stream are like a pipe where data flow one by one and we apply "filter", "transform" similar to JavaScript "map", "filter", "reduce".
         // 🟡 But the difference with JavaScript is that it won't run one by one like in JavaScript first "map" runs then "filter" and then other if there but where happen on data that flow through each steps
+
+        // 🔵 Important middle steps in Java:
+        //      1. .filter(v -> v % 2 != 0)
+        //      2. .map(v -> v * 2)
+        //      3. .flatMap()
+        //      4. .distinct()
+        //      5. .sorted()
+        //      6. .limit(n)
+        //      7. .skip(n)
+
+        // 🔵 Important final steps in Java:
+        //      1. .toList()
+        //      2.
         List<Integer> list = new ArrayList<>(
             List.of(11, 22, 33, 44, 55, 66, 77, 88, 99)
         );
