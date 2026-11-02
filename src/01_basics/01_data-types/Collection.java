@@ -13,6 +13,9 @@ class ListInJava {
         List<Integer> numList = new ArrayList<>(10);
         List<String> strList = new ArrayList<>(Collections.nCopies(10, "Java"));
 
+        // 🟡 """Fixed""" array similar to raw array in java, methods like "add", "remove" isn't not allowed here.
+        List<String> names = List.of("Java", "Python", "JavaScript", "C++");
+
         System.out.println(numList);
         System.out.println(strList);
 

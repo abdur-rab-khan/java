@@ -1,4 +1,9 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 class IfElse {
 
@@ -90,14 +95,101 @@ class LoopingInJava {
 
     void classic() {
         System.out.println("<===============> Classic Loop <===============>");
+        List<Integer> list = new ArrayList<>();
+        int[] numList = { 1, 2, 3, 4, 5 };
+
+        for (int i = 0; i < numList.length; ++i) {
+            list.add(numList[i]);
+        }
+
+        System.out.println("List is: " + list);
+
+        // 🟡 Looping using while loop
+        int count = 0;
+        while (count < 3) {
+            count++;
+        }
+        System.out.println("Now count is: " + count);
     }
 
     void forEach() {
         System.out.println("<===============> ForEach Loop <===============>");
+
+        List<Integer> list = new ArrayList<>(List.of(44, 55, 66, 77, 88, 99));
+        System.out.print("Values are: ");
+        for (int x : list) {
+            // 🟡 Wrong you can't do that,
+            // if (x == 55) {
+            //     list.remove(list.indexOf(55));
+            // }
+            System.out.print(x + " ");
+        }
+        System.out.print("\n");
+
+        // 🟡 Looping on hashMap and hashSet
+        Map<String, Integer> languageRating = new HashMap<>(
+            Map.of("C++", 10, "JavaScript", 8, "Python", 8, "Java", 6)
+        );
+        for (Map.Entry<String, Integer> x : languageRating.entrySet()) {
+            System.out.println(
+                "Language is: " + x.getKey() + " -> " + x.getValue()
+            );
+        }
+
+        Set<String> languages = new HashSet<>(
+            Set.of("Java", "Python", "JavaScript", "C++")
+        );
+        System.out.print("Languages are: ");
+        for (String j : languages) {
+            System.out.print(j + ", ");
+        }
+        System.out.print("\n");
     }
 
-    void loopOnMap() {
-        System.out.println("<===============> Loop on Map <===============>");
+    void streamingAPI() {
+        System.out.println("<===============> Streaming API <===============>");
+
+        // 🟡 Stream are like a pipe where data flow one by one and we apply "filter", "transform" similar to JavaScript "map", "filter", "reduce".
+        // 🟡 But the difference with JavaScript is that it won't run one by one like in JavaScript first "map" runs then "filter" and then other if there but where happen on data that flow through each steps
+        List<Integer> list = new ArrayList<>(
+            List.of(11, 22, 33, 44, 55, 66, 77, 88, 99)
+        );
+
+        // 🟡 Tell's filter only even numbers
+        List<Integer> evenNums = list
+            .stream()
+            .filter(n -> n % 2 != 0)
+            .map(v -> v + 100)
+            .toList();
+        System.out.println("Even Nums are: " + evenNums);
+
+        // 🟡 Let's build an object and modify the data through stream on to the data
+        record Order(String customer, String status, double amount) {}
+
+        List<Order> orders = List.of(
+            new Order("Ali", "PAID", 120.0),
+            new Order("Sara", "PENDING", 80.0),
+            new Order("Ali", "PAID", 60.0),
+            new Order("John", "PAID", 200.0)
+        );
+
+        // 🟡 Customer who is paid and not repeated
+        List<String> customers = orders
+            .stream()
+            .filter(o -> o.status().equals("PAID"))
+            .map(Order::customer)
+            .distinct()
+            .sorted()
+            .toList();
+        System.out.println("Customers are: " + customers);
+
+        // 🟡 Custom total amount that is paid by the customers
+        double totalAmount = orders
+            .stream()
+            .filter(o -> o.status().equals("PAID"))
+            .mapToDouble(Order::amount)
+            .sum();
+        System.out.println("Total amount is: " + totalAmount);
     }
 }
 
@@ -112,6 +204,6 @@ public class Main {
         LoopingInJava l = new LoopingInJava();
         l.classic();
         l.forEach();
-        l.loopOnMap();
+        l.streamingAPI();
     }
 }
