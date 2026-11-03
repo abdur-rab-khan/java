@@ -68,6 +68,25 @@ class StackInJava {
     // and both share the common interface Deque (or you can use the legacy Stack class)
 }
 
+class StreamAPI {
+
+    void arrayStreamAPI() {
+        System.out.println(
+            "<===============> Array Stream API <===============>"
+        );
+        List<Integer> list = new ArrayList<>(List.of(1, 2, 3, 4, 5));
+
+        // 🟡 Let's use important stream methods for "ArrayList"
+        //  🔸 Let's only sum the even numbers:
+        int sumOfEvenNums = list
+            .stream()
+            .filter(v -> v % 2 == 0)
+            .mapToInt(v -> v) // 🔸 Converts `Stream<Integer>` to simple int
+            .sum();
+        System.out.println("Sum of even numbers are: " + sumOfEvenNums);
+    }
+}
+
 public class Collection {
 
     public static void main(String[] args) {
@@ -75,8 +94,10 @@ public class Collection {
         MapInJava map = new MapInJava();
         SetInJava set = new SetInJava();
         QueueInJava queue = new QueueInJava();
+        StreamAPI streamApi = new StreamAPI();
 
         list.arrayList();
         list.linkedList();
+        streamApi.arrayStreamAPI();
     }
 }
