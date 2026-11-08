@@ -18,6 +18,7 @@
          |   8. boolean   |  not fixed |  true or false                                                  |
          +-----------------------------------------------------------------------------------------------+
 
+🟡 In Java """var""" is similar to `auto` in C++, use to create dynamically typed variable
 🟡 """final""" keyword use to make a variable content constant (immutable) similar to """const""" keyword
  */
 
@@ -76,6 +77,7 @@ class PrimitiveTypes {
             2. [Characters (cache from 0 to 127)]
             3. [Boolean: (cache true and false)]
             4. [Float/Double: (No Cache at all)]
+            5. [String created directly always cache] --> (String name = "Java")
         🔸 Value with same value range above shown, directly points to same location
 
         🔵 Most common reason why we use Wrapper/Boxing:
@@ -186,7 +188,59 @@ class ArrayInJava {
     }
 }
 
-class StringInJava {}
+class StringInJava {
+
+    /*
+      🟡 Two ways to create a String:
+         1. Literal: String s = "Hello";
+            🔸 Goes in the string pool. Same value points to the same object.
+         2. new String("Hello")
+            🔸 Always creates a new object on the heap, outside the pool.
+
+      🟡 StringBuilder is a separate class (not a String).
+         🔸 It is mutable, so it is good for changing text many times.
+         🔸 It has nothing to do with the string pool.
+         🔸 builder.toString() gives a new String object.
+    */
+
+    void createString() {
+        System.out.println("<==============> String in Java <==============>");
+        String str1 = "Hello";
+        String str2 = "Hello";
+
+        // 🟡 Since the content is same java only create "Hello" first time for """str1""" and directly """str2""" point to same memory location of """str1"""
+        System.out.println("Is check str1 == str2 " + (str1 == str2)); // True
+
+        // 🟡 It checks about the content whether the content is same or not
+        System.out.println("Is content is same: " + str1.equals(str2)); // True
+
+        // 👉 Create new object for string every time:
+        String newStr1 = new String("Hello");
+        String newStr2 = new String("Hello");
+        System.out.println("Is check str1 == str2 " + (newStr1 == newStr2)); // False
+        System.out.println("Is content is same: " + newStr1.equals(newStr2)); // True
+    }
+
+    void createStringBuilder() {
+        System.out.println(
+            "<==============> StringBuilder in Java <==============>"
+        );
+
+        // 🟡 See the problem here, String is immutable in each iteration new string will be created, solution StringBuilder because it's mutable
+        String str = "";
+        for (int i = 0; i < 10; ++i) {
+            str += i + " ";
+        }
+        System.out.println("The value of str is: " + str);
+
+        StringBuilder str1 = new StringBuilder();
+        for (int i = 0; i < 10; ++i) {
+            str1.append(i);
+            str1.append(" ");
+        }
+        System.out.println("The value of str1 is: " + str1);
+    }
+}
 
 public class Main {
 
@@ -201,5 +255,7 @@ public class Main {
         pt.wrapBoxing();
         arr.fixedArray();
         arr.dynamicArray();
+        str.createString();
+        str.createStringBuilder();
     }
 }
